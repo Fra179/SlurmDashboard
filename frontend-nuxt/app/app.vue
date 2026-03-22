@@ -23,7 +23,13 @@ useHead({
   title: 'SLURM Cluster Monitor',
   htmlAttrs: {
     lang: 'en'
-  }
+  },
+  meta: [
+    {
+      name: 'theme-color',
+      content: () => isDark.value ? '#020617' : '#f8fafc' // slate-950 vs slate-50
+    }
+  ]
 })
 
 const isDark = useDark() // This initializes the dark mode class on HTML tag automatically using vueuse

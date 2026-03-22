@@ -14,8 +14,8 @@ export default defineNuxtConfig({
       name: 'SLURM Dashboard',
       short_name: 'SLURM',
       description: 'Monitor your SLURM cluster and jobs',
-      theme_color: '#f8fafc',
-      background_color: '#f8fafc',
+      theme_color: '#020617',
+      background_color: '#020617',
       display: 'standalone',
       start_url: '/',
       icons: [
