@@ -13,12 +13,32 @@ export default defineNuxtConfig({
     manifest: {
       name: 'SLURM Dashboard',
       short_name: 'SLURM',
+      description: 'Monitor your SLURM cluster and jobs',
       theme_color: '#f8fafc',
+      background_color: '#f8fafc',
+      display: 'standalone',
+      start_url: '/',
       icons: [
         {
           src: '/favicon.ico',
           sizes: 'any',
           type: 'image/x-icon'
+        },
+        {
+          src: '/pwa-192x192.png',
+          sizes: '192x192',
+          type: 'image/png'
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png'
+        },
+        {
+          src: '/pwa-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any maskable'
         }
       ]
     },
