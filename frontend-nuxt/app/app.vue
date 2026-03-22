@@ -19,6 +19,9 @@
 <script setup lang="ts">
 import { useNetwork, useDark } from '@vueuse/core'
 
+const isDark = useDark() // This initializes the dark mode class on HTML tag automatically using vueuse
+const { isOnline } = useNetwork()
+
 useHead({
   title: 'SLURM Cluster Monitor',
   htmlAttrs: {
@@ -31,7 +34,4 @@ useHead({
     }
   ]
 })
-
-const isDark = useDark() // This initializes the dark mode class on HTML tag automatically using vueuse
-const { isOnline } = useNetwork()
 </script>
