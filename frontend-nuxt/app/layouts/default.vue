@@ -16,6 +16,7 @@
     <!-- Modals and Sidebars -->
     <SettingsModal :is-open="isSettingsOpen" @close="isSettingsOpen = false" />
     <NodeSidebar />
+    <UserSidebar />
   </div>
 </template>
 

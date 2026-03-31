@@ -76,21 +76,43 @@ export const useSlurmData = () => {
   const totalJobsCount = computed(() => data.value?.jobs.length || 0)
 
   const cpuStats = computed(() => {
-    let total = 0, alloc = 0
+    let total = 0, alloc = 0, offline = 0
     data.value?.nodes.forEach(n => {
       total += n.cpu.total
       alloc += n.cpu.alloc
+      if (['DOWN', 'DRAINED', 'DOWN|NOT_RESPONDING'].includes(n.state)) {
+        offline += n.cpu.total
+      }
     })
-    return { total, alloc, pct: total > 0 ? Math.round((alloc / total) * 100) : 0 }
+    const idle = Math.max(0, total - alloc - offline)
+    return { 
+      total, 
+      alloc, 
+      offline,
+      idle,
+      pct: total > 0 ? Math.round((alloc / total) * 100) : 0,
+      offlinePct: total > 0 ? Math.round((offline / total) * 100) : 0
+    }
   })
 
   const gpuStats = computed(() => {
-    let total = 0, alloc = 0
+    let total = 0, alloc = 0, offline = 0
     data.value?.nodes.forEach(n => {
       total += n.gpu.total
       alloc += n.gpu.alloc
+      if (['DOWN', 'DRAINED', 'DOWN|NOT_RESPONDING'].includes(n.state)) {
+        offline += n.gpu.total
+      }
     })
-    return { total, alloc, pct: total > 0 ? Math.round((alloc / total) * 100) : 0 }
+    const idle = Math.max(0, total - alloc - offline)
+    return { 
+      total, 
+      alloc, 
+      offline,
+      idle,
+      pct: total > 0 ? Math.round((alloc / total) * 100) : 0,
+      offlinePct: total > 0 ? Math.round((offline / total) * 100) : 0
+    }
   })
 
   return {

@@ -48,17 +48,17 @@
             <td class="px-4 py-3 font-mono text-slate-700 dark:text-slate-300">#{{ job.id }}</td>
             <td class="px-4 py-3 font-medium text-slate-900 dark:text-white">{{ job.name }}</td>
             <td class="px-4 py-3">
-              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30">{{ job.status[0] }}</span>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border" :class="getStatusClass(job.status)">{{ job.status[0] }}</span>
             </td>
             <td class="px-4 py-3">
               <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700">{{ job.partition }}</span>
             </td>
             <td class="px-4 py-3">
               <div class="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                <div class="w-5 h-5 rounded bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px] text-slate-600 dark:text-slate-400 font-bold border border-slate-300 dark:border-slate-700">
+                <div class="w-5 h-5 rounded bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-[10px] text-slate-600 dark:text-slate-400 font-bold border border-slate-300 dark:border-slate-700 shrink-0">
                   {{ job.user.charAt(0).toUpperCase() }}
                 </div>
-                <span>{{ job.user }}</span>
+                <span class="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer transition-colors font-medium truncate" @click="openUserSidebar(job.user)">{{ job.user }}</span>
               </div>
             </td>
             <td class="px-4 py-3 text-blue-600 dark:text-blue-400 hover:underline cursor-pointer transition-colors" @click="handleNodeClick(job.node)">
@@ -86,7 +86,16 @@
 import { SearchIcon } from 'lucide-vue-next'
 
 const { data } = useSlurmData()
-const { openSidebar } = useSidebar()
+const { openSidebar, openUserSidebar } = useSidebar()
+
+const getStatusClass = (status: any) => {
+  const s = Array.isArray(status) ? status[0] : status
+  const normalizedS = s?.toString().toUpperCase() || ''
+  if (normalizedS === 'PENDING' || normalizedS === 'PD') {
+    return 'bg-orange-100 dark:bg-orange-500/20 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-500/30'
+  }
+  return 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/30'
+}
 
 const jobPartitionFilter = ref('all')
 const searchQuery = ref('')
